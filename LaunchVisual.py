@@ -2,7 +2,7 @@ from tkinter import *
 import json
 
 from models.pageClass import Page
-from createPPT import CreatePPT
+from PPT_Generation.createPPT import CreatePPT
 
 # This list will store all the pages that will be created 
 pages = []

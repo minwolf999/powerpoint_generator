@@ -1,7 +1,7 @@
 import json
 from pptx import Presentation
 
-from createElem import CreateText, SetBackground, CreateImage
+from PPT_Generation.createElem import CreateText, SetBackground, CreateImage
 
 # This function gonna create the powerpoint file
 def CreatePPT(JsonPath):

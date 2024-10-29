@@ -46,7 +46,7 @@ Avant de lancer le projet, assurez-vous d'avoir installé les dépendances néce
 
 1. Lancez le programme en exécutant `main.py` :
     ```bash
-    python3 main.py
+    python3 LaunchVisual.py
     ```
 
 2. **Interface graphique** : 
@@ -55,6 +55,14 @@ Avant de lancer le projet, assurez-vous d'avoir installé les dépendances néce
 
 3. **Génération du PowerPoint** :
    - Une fois toutes les informations ajoutées, le programme génère un fichier `.ppt` contenant toutes les données.
+
+4. **Modification d'un PowerPoint via le fichier JSON**
+    - Ouvrir le fichier data.json 
+    - Modifier les valeurs erronées
+    - Lancer la commande
+    ```bash
+    python3 GeneratePPTfromjson.py
+    ```
 
 ## Structure du projet
 
@@ -66,7 +74,8 @@ Avant de lancer le projet, assurez-vous d'avoir installé les dépendances néce
     │   ├── pageClass.py        # Fichier gérant le formulaire d'ajout d'une page avec tkinter
     │   └── textClass.py        # Fichier gérant le formulaire d'ajout d'un text avec tkinter dans une page
     |
-    ├── main.py                 # Point d'entrée principal de l'application
+    ├── GeneratePPTfromjson.py  # Point d'entrée principal pour la création du .ppt via un json pré conçu
+    ├── LaunchVisual.py         # Point d'entrée principal de l'application
     ├── createElem.py           # Fichier générant des éléments dans le .ppt
     ├── createPPT.py            # Fichier générant le .ppt
     |
