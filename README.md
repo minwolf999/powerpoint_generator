@@ -33,7 +33,7 @@ Avant de lancer le projet, assurez-vous d'avoir installé les dépendances néce
 
 1. Clonez ce dépôt ou téléchargez-le sous forme d'archive ZIP :
     ```bash
-    git clone https://github.com/minwolf999/powerpoint_generator.git
+    git clone [https://github.com/minwolf999/powerpoint_generator.git](https://github.com/minwolf999/powerpoint_generator.git)
     cd votre-projet
     ```
 
