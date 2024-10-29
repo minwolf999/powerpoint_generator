@@ -15,8 +15,8 @@ class Page:
     def __init__(self, tk, i):
         self.tk = tk
         self.name = f"Diap{i}"
-        self.start = StringVar
-        self.end = StringVar
+        self.start = "000000"
+        self.end = "000000"
         self.children = []
 
 

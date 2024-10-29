@@ -30,7 +30,7 @@ class Text:
         self.width = None
         self.height = None
 
-        self.fontcolor = ""
+        self.fontcolor = "ffffff"
         self.fontsize = 0
         self.fontname = ""
 
