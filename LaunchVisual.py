@@ -50,7 +50,7 @@ def GenerateJSON():
                     "Left": child.left,
                     "Top": child.top,
                     "Width": child.width,
-                    "height": child.height,
+                    "Height": child.height,
                 }
             
     # We create the json file and fill it with the dict store in data
