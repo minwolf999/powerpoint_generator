@@ -27,8 +27,8 @@ class Text:
 
         self.left = 0.0
         self.top = 0.0
-        self.width = None
-        self.height = None
+        self.width = 0.0
+        self.height = 0.0
 
         self.fontcolor = "ffffff"
         self.fontsize = 0
@@ -153,7 +153,7 @@ class Text:
         try:
             # If the texte is empty we set None
             if (sv.get() == ""):
-                self.width = None
+                self.width = 0.0
             # If the text is a valid number we convert it in float and store it
             else:
                 self.width = float(sv.get())
@@ -167,7 +167,7 @@ class Text:
         try:
             # If the texte is empty we set None
             if (sv.get() == ""):
-                self.height = None
+                self.height = 0.0
             # If the text is a valid number we convert it in float and store it
             else:
                 self.height = float(sv.get())
