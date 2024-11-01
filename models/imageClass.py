@@ -17,8 +17,8 @@ class Image:
         self.path = ""
         self.left = 0.0
         self.top = 0.0
-        self.width = 0.0
-        self.height = 0.0
+        self.width = None
+        self.height = None
 
 
     # The AddImage method gonna implement the elements in the tkinter frame
@@ -98,7 +98,7 @@ class Image:
         try:
             # If the texte is empty we set None
             if (sv.get() == ""):
-                self.width = 0.0
+                self.width = None
             # If the text is a valid number we convert it in float and store it
             else:
                 self.width = float(sv.get())
@@ -112,7 +112,7 @@ class Image:
         try:
             # If the texte is empty we set None
             if (sv.get() == ""):
-                self.height = 0.0
+                self.height = None
             # If the text is a valid number we convert it in float and store it
             else:
                 self.height = float(sv.get())
