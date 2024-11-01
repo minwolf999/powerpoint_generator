@@ -42,8 +42,19 @@ from pptx.util import Pt, Cm
 
 # This function gonna add a text to a powerpoint page
 def CreateText(data, slide):
+    # We try to set the width and height in cm (but since they can't be zero, the conversion may fail)
+    try:
+        width = Cm(data["Width"])
+    except (ValueError, TypeError):
+        width = None
+
+    try:
+        height = Cm(data["Height"])
+    except (ValueError, TypeError):
+        height = None
+        
     # We add a box to the text (and the text inside this box will break the line if it is too big)
-    title = slide.shapes.add_textbox(Cm(data["Left"]), Cm(data["Top"]), Cm(data["Width"]), Cm(data["Height"]))
+    title = slide.shapes.add_textbox(Cm(data["Left"]), Cm(data["Top"]), width, height)
     text_frame = title.text_frame
     text_frame.word_wrap = True
 
