@@ -25,7 +25,7 @@ def CreatePPT(JsonPath):
             if y == "Background":
                 SetBackground(prs, slide, data[i][y])
             # We set the image
-            if y == "Image":
+            if "Path" in data[i][y]:
                 CreateImage(data[i][y], slide)
             # We set the text
             if "Text" in data[i][y]:
