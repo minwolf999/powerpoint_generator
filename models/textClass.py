@@ -1,6 +1,9 @@
 from tkinter import *
 from tkinter import colorchooser
 
+from visualizer.Visualizer import Visualizer
+import const
+
 # The Text class handle a text element of a page
 class Text:
     # We define:
@@ -30,7 +33,7 @@ class Text:
         self.width = 0.0
         self.height = 0.0
 
-        self.fontcolor = "ffffff"
+        self.fontcolor = "000000"
         self.fontsize = 0
         self.fontname = ""
 
@@ -44,12 +47,12 @@ class Text:
     # The AddText method gonna implement the elements in the tkinter frame
     def AddText(self):
         # We add a text who say we are on a new text element
-        Label(self.tk, text="Add a new text to the layout", font="bold").pack(anchor='e', pady=(25,3))
+        Label(self.tk, text="Add a new texte to the page", font="bold").pack(anchor='e', pady=(25,3))
 
         # We add a Entry area to enter the text
         textTemp = StringVar()
         textTemp.trace_add("write", lambda name, index, mode, sv=textTemp: self.SetText(sv))
-        Label(self.tk, text="Text of your element").pack(anchor='e', pady=3)
+        Label(self.tk, text="Content of your text").pack(anchor='e', pady=3)
         self.in_text = Entry(self.tk, textvariable=textTemp)
         self.in_text.pack(anchor='e', pady=3)
 
@@ -83,20 +86,20 @@ class Text:
 
         # We add a text and an entry area to define the font color of the text
         Label(self.tk, text="Font color").pack(anchor='e', pady=3)
-        self.in_fontcolor = Button(self.tk, text="Pic a color", command=self.SetFontColor)
+        self.in_fontcolor = Button(self.tk, text="Choose a color", command=self.SetFontColor)
         self.in_fontcolor.pack(anchor='e', pady=3)
 
         # We add a text and an entry area to define the font size of the text
         fontsizeTemp = StringVar()
         fontsizeTemp.trace_add("write", lambda name, index, mode, sv=fontsizeTemp: self.SetFontSize(sv))
-        Label(self.tk, text="Font Size").pack(anchor='e', pady=3)
+        Label(self.tk, text="Font size").pack(anchor='e', pady=3)
         self.in_fontsize = Entry(self.tk, textvariable=fontsizeTemp)
         self.in_fontsize.pack(anchor='e', pady=3)
 
         # We add a text and an entry area to define the font family of the text
         fontnameTemp = StringVar()
         fontnameTemp.trace_add("write", lambda name, index, mode, sv=fontnameTemp: self.SetFontName(sv))
-        Label(self.tk, text="Font Family").pack(anchor='e', pady=3)
+        Label(self.tk, text="Font family").pack(anchor='e', pady=3)
         self.in_fontname = Entry(self.tk, textvariable=fontnameTemp)
         self.in_fontname.pack(anchor='e', pady=3)
 
@@ -118,6 +121,8 @@ class Text:
     # This method will set the text enter in the text class variable
     def SetText(self, sv):
         self.text = sv.get()
+        Visualizer(const.visualizer_frame, const.pages)
+
         
     
     # This method will set the number enter for the left class variable
@@ -125,13 +130,15 @@ class Text:
         try:
             # If the texte is empty we set 0.0
             if (sv.get() == ""):
-                self.top = 0.0
+                self.left = 0.0
             # If the text is a valid number we convert it in float and store it
             else:
-                self.top = float(sv.get())
+                self.left = float(sv.get())
         # If the text isn't a valid number we clear the entry area
         except:
             self.in_left.delete(0, 'end')
+
+        Visualizer(const.visualizer_frame, const.pages)
 
 
     # This method will set the number enter for the top class variable
@@ -147,6 +154,8 @@ class Text:
         except:
             self.in_top.delete(0, 'end')
 
+        Visualizer(const.visualizer_frame, const.pages)
+
 
     # This method will set the number enter for the width class variable
     def SetWidth(self, sv):
@@ -160,6 +169,8 @@ class Text:
         # If the text isn't a valid number we clear the entry area
         except:
             self.in_width.delete(0, 'end')
+
+        Visualizer(const.visualizer_frame, const.pages)
 
 
     # This method will set the number enter for the height class variable
@@ -175,14 +186,18 @@ class Text:
         except:
             self.in_height.delete(0, 'end')
 
+        Visualizer(const.visualizer_frame, const.pages)
+
 
     # This method will set the chosen color in the class variable fontcolor
     def SetFontColor(self):
         # We open a color form and store the color chosen
-        color_code = colorchooser.askcolor(title="Choose font color")[1]
+        color_code = colorchooser.askcolor(title="Choisir la couleur d'écriture")[1]
         if color_code:
             self.in_fontcolor.config(bg=color_code)
             self.fontcolor = color_code[1:]
+
+        Visualizer(const.visualizer_frame, const.pages)
 
 
     # This method will set the number enter for the fontsize class variable
@@ -198,27 +213,38 @@ class Text:
         except:
             self.in_fontsize.delete(0, 'end')
 
+        Visualizer(const.visualizer_frame, const.pages)
+
 
     # This method will set the text enter in the fontname class variable
     def SetFontName(self, sv):
         self.fontname = sv.get()
+        Visualizer(const.visualizer_frame, const.pages)
 
 
     # This method will set if the font is in bold or not
     def SetBold(self):
         self.bold = not self.bold
+        Visualizer(const.visualizer_frame, const.pages)
 
 
     # This method will set if the font is in italic or not
     def SetItalic(self):
         self.italic = not self.italic
+        Visualizer(const.visualizer_frame, const.pages)
 
 
     # This method will set if the font is in underline or not
     def SetUnderline(self):
         self.underline = not self.underline
+        Visualizer(const.visualizer_frame, const.pages)
 
 
     # This method will set if the align of the font
     def SetAlign(self, e):
+        if len(e.widget.curselection()) == 0:
+            return
+        
         self.align = e.widget.get(int(e.widget.curselection()[0])).lower()
+
+        Visualizer(const.visualizer_frame, const.pages)

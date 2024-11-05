@@ -1,6 +1,9 @@
 from tkinter import *
 from tkinter import filedialog
 
+import const
+from visualizer.Visualizer import Visualizer
+
 # The Image class handle an image element of a page
 class Image:
     # We define:
@@ -13,6 +16,7 @@ class Image:
         # - the height of the image
     def __init__(self, tk, i):
         self.tk = tk
+
         self.name = f"Image{i}"
         self.path = ""
         self.left = 0.0
@@ -24,10 +28,10 @@ class Image:
     # The AddImage method gonna implement the elements in the tkinter frame
     def AddImage(self):
         # We add a text who say we are on a new image element
-        Label(self.tk, text="Add a new image", font="bold").pack(anchor='e', pady=(25,3))
+        Label(self.tk, text="Add a new image to the page", font="bold").pack(anchor='e', pady=(25,3))
 
         # We add a button to select en image
-        Label(self.tk, text="Select an image").pack(anchor='e', pady=3)
+        Label(self.tk, text="Choose an image").pack(anchor='e', pady=3)
         self.in_image = Button(self.tk, text="Choose your image", command=self.SetImage)
         self.in_image.pack(anchor='e', pady=3)
 
@@ -62,7 +66,8 @@ class Image:
 
     # This method gonna open the choose file popup
     def SetImage(self):
-        self.path = filedialog.askopenfilename()
+        self.path = filedialog.askopenfilename(filetypes=[("Image File",'.jpg .png .jpeg')])
+        Visualizer(const.visualizer_frame, const.pages)
 
 
     # This method gonna set the number enter for the left class variable
@@ -70,13 +75,15 @@ class Image:
         try:
             # If the texte is empty we set 0.0
             if (sv.get() == ""):
-                self.top = 0.0
+                self.left = 0.0
             # If the text is a valid number we convert it in float and store it
             else:
-                self.top = float(sv.get())
+                self.left = float(sv.get())
         # If the text isn't a valid number we clear the entry area
         except:
             self.in_left.delete(0, 'end')
+
+        Visualizer(const.visualizer_frame, const.pages)
 
 
     # This method gonna set the number enter for the top class variable
@@ -92,6 +99,8 @@ class Image:
         except:
             self.in_top.delete(0, 'end')
 
+        Visualizer(const.visualizer_frame, const.pages)
+
 
     # This method gonna set the number enter for the width class variable
     def SetWidth(self, sv):
@@ -106,6 +115,8 @@ class Image:
         except:
             self.in_width.delete(0, 'end')
 
+        Visualizer(const.visualizer_frame, const.pages)
+
 
     # This method gonna set the number enter for the height class variable
     def SetHeight(self, sv):
@@ -119,3 +130,5 @@ class Image:
         # If the text isn't a valid number we clear the entry area
         except:
             self.in_height.delete(0, 'end')
+
+        Visualizer(const.visualizer_frame, const.pages)

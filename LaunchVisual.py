@@ -1,89 +1,22 @@
 from tkinter import *
-import json
 
+import const
 from models.pageClass import Page
-from PPT_Generation.createPPT import CreatePPT
-
-# This list will store all the pages that will be created 
-pages = []
-
-# This function will generate a JSON file with the information entered for the creation of the powerpoint
-def GenerateJSON():
-    # We initialize the dict that will store the json data
-    data = {}
-
-    # We loop on the list
-    for page in pages:
-        # We initialize the dict of dict
-        data[page.name] = {}
-
-        # We set the bacground data for the current page
-        data[page.name]["Background"] = {
-            "Start": page.start,
-            "End": page.end
-        }
-
-        # We loop on the elements of each page
-        for child in page.children:
-            # If the element if a instance of Text
-            if type(child).__name__ == "Text":
-                # We set the dict of the current text
-                data[page.name][child.name] = {
-                    "Text": child.text,
-                    "Left": child.left,
-                    "Top": child.top,
-                    "Width": child.width,
-                    "Height": child.height,
-                    "FontColor": child.fontcolor,
-                    "FontSize": child.fontsize,
-                    "FontName": child.fontname,
-                    "Bold": child.bold,
-                    "Italic": child.italic,
-                    "Underline": child.underline,
-                    "Align": child.align,
-                }
-            # Or if the element if a instance of Image
-            elif type(child).__name__ == "Image":
-                # We set the dict of the current image
-                data[page.name][child.name] = {
-                    "Path": child.path,
-                    "Left": child.left,
-                    "Top": child.top,
-                    "Width": child.width,
-                    "Height": child.height,
-                }
-            
-    # We create the json file and fill it with the dict store in data
-    with open("data.json", "w") as f:
-        json.dump(data, f, indent=4)
-
-    # We start the creation of the powerpoint
-    CreatePPT("data.json")
-
-    # We stop the application
-    root.destroy()
+from generateJSON.generateJSON import GenerateJSON
+from visualizer.Visualizer import Visualizer
 
 
 # we create a new page for the future powerpoint
 def CreatePage():
     # We create a new Page instance, call its AddPage method and store it in a list
-    page = Page(content_frame, len(pages))
+    page = Page(content_frame, len(const.pages))
     page.AddPage()
-    pages.append(page)
+    const.pages.append(page)
 
-
-# This function handles the mouse scroll event
-def on_mouse_wheel(event):
-    # event.num is a button of the mouse and event.delta is a scroll unity (start at 0 and can be positive or negative)
-    if event.num == 5 or event.delta == -120:
-        canvas.yview_scroll(1, "units")
-    elif event.num == 4 or event.delta == 120:
-        canvas.yview_scroll(-1, "units")
-        
 
 # This is where the program begins
 if __name__ == "__main__":
-    # We create an instance of tkinter
+     # We create an instance of tkinter
     root = Tk()
     
     # Set his status to zoomed
@@ -92,7 +25,7 @@ if __name__ == "__main__":
     except TclError:
         root.state('zoomed')
 
-    # Set his title
+     # Set his title
     root.title("PowerPoint Generator")
     
     # We create a canvas on all the tkinter instance
@@ -101,7 +34,7 @@ if __name__ == "__main__":
 
     # We create a scroll bar on the right side of the screen and take all the height of the page
     scrollbar = Scrollbar(root, orient=VERTICAL, command=canvas.yview)
-    scrollbar.pack(side=RIGHT, fill=Y)
+    scrollbar.pack(side=LEFT, fill=Y)
     
     # We synchronize the scrollbar and the vue height of the canvas
     canvas.configure(yscrollcommand=scrollbar.set)
@@ -120,11 +53,24 @@ if __name__ == "__main__":
 
     # We bind the scrollbar size to the quantity of element contain inside the content_frame
     content_frame.bind('<Configure>', lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
+    content_frame.bind('<Configure>', lambda e: Visualizer(visualizer_frame=const.visualizer_frame, pages=const.pages), add='+')
 
-    # We bind the MouseWheel event and 2 button on the mouse to the scroll event
-    content_frame.bind_all("<MouseWheel>", on_mouse_wheel)
-    content_frame.bind_all("<Button-4>", on_mouse_wheel)
-    content_frame.bind_all("<Button-5>", on_mouse_wheel)
+
+    root.update()
+
+    visualizer_canvas = Canvas(root, width=root.winfo_screenwidth() - canvas.winfo_width())
+    visualizer_canvas.pack(side=LEFT, fill=BOTH, expand=True)
+
+    # We create a scroll bar on the right side of the screen and take all the height of the page
+    visualizer_scrollbar = Scrollbar(root, orient=VERTICAL, command=visualizer_canvas.yview)
+    visualizer_scrollbar.pack(side=RIGHT, fill=Y)
+
+    visualizer_canvas.configure(yscrollcommand=visualizer_scrollbar.set)
+
+    const.visualizer_frame = Frame(visualizer_canvas)
+    visualizer_canvas.create_window((0, 0), window=const.visualizer_frame, anchor='nw')
+    
+    const.visualizer_frame.bind("<Configure>", lambda e: visualizer_canvas.configure(scrollregion=visualizer_canvas.bbox("all")))
 
     # We start the application
     root.mainloop()
