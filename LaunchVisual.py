@@ -14,6 +14,13 @@ def CreatePage():
     const.pages.append(page)
 
 
+def on_mouse_wheel(event, elem):
+    if event.num == 5 or event.delta == -120:
+        elem.yview_scroll(1, 'units')
+    elif event.num == 4 or event.delta == 120:
+        elem.yview_scroll(-1, 'units')
+
+
 # This is where the program begins
 if __name__ == "__main__":
      # We create an instance of tkinter
@@ -56,6 +63,16 @@ if __name__ == "__main__":
     content_frame.bind('<Configure>', lambda e: Visualizer(visualizer_frame=const.visualizer_frame, pages=const.pages), add='+')
 
 
+    # Bind mouse scroll events only when the mouse is over content_frame
+    content_frame.bind('<Enter>', lambda e: content_frame.bind_all('<MouseWheel>', lambda e: on_mouse_wheel(e, canvas)), add='+')
+    content_frame.bind('<Enter>', lambda e: content_frame.bind_all('<Button-4>', lambda e: on_mouse_wheel(e, canvas)), add='+')
+    content_frame.bind('<Enter>', lambda e: content_frame.bind_all('<Button-5>', lambda e: on_mouse_wheel(e, canvas)), add='+')
+
+    content_frame.bind('<Leave>', lambda e: content_frame.unbind_all('<MouseWheel>'), add='+')
+    content_frame.bind('<Leave>', lambda e: content_frame.unbind_all('<Button-4>'), add='+')
+    content_frame.bind('<Leave>', lambda e: content_frame.unbind_all('<Button-5>'), add='+')
+
+
     root.update()
 
     visualizer_canvas = Canvas(root, width=root.winfo_screenwidth() - canvas.winfo_width())
@@ -71,6 +88,14 @@ if __name__ == "__main__":
     visualizer_canvas.create_window((0, 0), window=const.visualizer_frame, anchor='nw')
     
     const.visualizer_frame.bind("<Configure>", lambda e: visualizer_canvas.configure(scrollregion=visualizer_canvas.bbox("all")))
+
+    const.visualizer_frame.bind('<Enter>', lambda e: const.visualizer_frame.bind_all('<MouseWheel>', lambda e: on_mouse_wheel(e, visualizer_canvas)), add='+')
+    const.visualizer_frame.bind('<Enter>', lambda e: const.visualizer_frame.bind_all('<Button-4>', lambda e: on_mouse_wheel(e, visualizer_canvas)), add='+')
+    const.visualizer_frame.bind('<Enter>', lambda e: const.visualizer_frame.bind_all('<Button-5>', lambda e: on_mouse_wheel(e, visualizer_canvas)), add='+')
+
+    const.visualizer_frame.bind('<Leave>', lambda e: const.visualizer_frame.unbind_all('<MouseWheel>'), add='+')
+    const.visualizer_frame.bind('<Leave>', lambda e: const.visualizer_frame.unbind_all('<Button-4>'), add='+')
+    const.visualizer_frame.bind('<Leave>', lambda e: const.visualizer_frame.unbind_all('<Button-5>'), add='+')
 
     # We start the application
     root.mainloop()
