@@ -83,7 +83,7 @@ def SetVisualizerText(canvas, data):
     for i, line in enumerate(wrapped_lines):
         line_id = canvas.create_text(
             left_px,
-            top_px + i * (font_size_px),  # Add vertical space between lines
+            top_px + (i * 10),  # Add vertical space between lines
             text=line,
             font=font,
             fill=color,

@@ -56,7 +56,7 @@ if __name__ == "__main__":
 
     # We create 2 buttons (one right align and the other one left align)
     Button(button_frame, text="Add a new page", command=CreatePage).pack(side='left')
-    Button(button_frame, text="Generate ppt file", command=GenerateJSON).pack(side='right')
+    Button(button_frame, text="Generate ppt file", command=lambda: GenerateJSON(root, const.pages)).pack(side='right')
 
     # We bind the scrollbar size to the quantity of element contain inside the content_frame
     content_frame.bind('<Configure>', lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
